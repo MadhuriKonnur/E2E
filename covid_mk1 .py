@@ -7,7 +7,7 @@
 # 
 # 2-Dense for nn-hidden and output
 
-# In[1]:
+# In[ ]:
 
 
 import numpy as np 
@@ -18,13 +18,13 @@ from keras.models import Sequential
 from keras.preprocessing import image
 
 
-# In[2]:
+# In[ ]:
 
 
 from keras.layers import LeakyReLU
 
 
-# In[3]:
+# In[ ]:
 
 
 # Building CNN model using keras
@@ -40,9 +40,9 @@ model.add(Conv2D(64,(3,3),activation='relu'))
 model.add(MaxPooling2D(pool_size=(2,2)))
 model.add(Dropout(0.25))
 
-model.add(Conv2D(128,(3,3),activation='relu'))
-model.add(MaxPooling2D(pool_size=(2,2)))
-model.add(Dropout(0.25))
+#model.add(Conv2D(128,(3,3),activation='relu'))
+#model.add(MaxPooling2D(pool_size=(2,2)))
+#model.add(Dropout(0.25))
 
 # now 4 convolution layers are  added
 
@@ -68,13 +68,13 @@ model.add(Dense(1,activation='sigmoid'))
 model.compile(optimizer='adam',loss='binary_crossentropy',metrics=['accuracy'])
 
 
-# In[4]:
+# In[ ]:
 
 
 model.summary()
 
 
-# In[5]:
+# In[ ]:
 
 
 #To make data ready for keras
@@ -94,17 +94,17 @@ train_datagen= image.ImageDataGenerator(
 test_dataset=image.ImageDataGenerator(rescale=1./255)
 
 
-# In[6]:
+# In[ ]:
 
 
-import os
-import shutil
+#import os
+#import shutil
 # to remove extra class indices '.ipynb_checkpoints'
 #shutil.rmtree('output/train/.ipynb_checkpoints')
 #shutil.rmtree('output/val/.ipynb_checkpoints')
 
 
-# In[7]:
+# In[ ]:
 
 
 # actual application of generators 
@@ -118,13 +118,13 @@ train_generator = train_datagen.flow_from_directory(
 
 
 
-# In[8]:
+# In[ ]:
 
 
 train_generator.class_indices
 
 
-# In[9]:
+# In[ ]:
 
 
 # for test dataset 
@@ -138,13 +138,13 @@ validation_generator= test_dataset.flow_from_directory(
 )
 
 
-# In[10]:
+# In[ ]:
 
 
 validation_generator.class_indices
 
 
-# In[11]:
+# In[ ]:
 
 
 hist=model.fit_generator(
@@ -160,37 +160,35 @@ hist=model.fit_generator(
 # 
 # ## Saving the model
 
-# In[12]:
+# In[ ]:
 
 
 model.save('cnn0.h5')
 
 
-# In[13]:
+# In[ ]:
 
 
-model.evaluate_generator(train_generator)
+acc=model.evaluate_generator(train_generator)
 
 
 # In[ ]:
 
 
+print ("Train accuracy is :")
+
+acc[1]
 
 
-
-# In[14]:
+# In[ ]:
 
 
 model.evaluate_generator(validation_generator)
 
 
-# Here 96%  accuracy from test data .
-# 
-# and 98% accuracy  from validation /test  data
-
 # ## Testing  the images
 
-# In[15]:
+# In[ ]:
 
 
 # load and evaluate a saved model
@@ -200,20 +198,20 @@ from keras.models import load_model
 model= load_model('cnn0.h5')
 
 
-# In[16]:
+# In[ ]:
 
 
 train_generator.class_indices
 
 
-# In[17]:
+# In[ ]:
 
 
 y_actual= []
 y_test = []
 
 
-# In[18]:
+# In[ ]:
 
 
 for i in os.listdir("./output/val/Normal/"):
@@ -226,7 +224,7 @@ for i in os.listdir("./output/val/Normal/"):
     
 
 
-# In[19]:
+# In[ ]:
 
 
 for i in os.listdir("./output/val/Covid/"):
@@ -238,14 +236,14 @@ for i in os.listdir("./output/val/Covid/"):
     y_actual.append(0)
 
 
-# In[20]:
+# In[ ]:
 
 
 y_actual=np.array(y_actual)
 y_test= np.array(y_test)
 
 
-# In[21]:
+# In[ ]:
 
 
 from sklearn.metrics import confusion_matrix
@@ -253,7 +251,7 @@ from sklearn.metrics import confusion_matrix
 cm= confusion_matrix(y_actual,y_test)
 
 
-# In[22]:
+# In[ ]:
 
 
 import seaborn as sns
@@ -261,7 +259,47 @@ import seaborn as sns
 sns.heatmap(cm,cmap='plasma',annot=True)
 
 
+# train loss ,acc[0.2863135039806366, 0.9783549904823303] 
+# test loss ,acc  [0.13886258006095886, 0.982758641242981]
+# 
+# 
+# 
+# cm [[28, 1],
+#     [0,29]]
+# # Building CNN model using keras
+# 
+# model=Sequential()
+# model.add(Conv2D(filters=32,kernel_size=(3,3),activation='relu',input_shape=(224,224,3)))
+# 
+# model.add(Conv2D(64,(2,2),activation='relu'))
+# model.add(MaxPooling2D(pool_size=(2,2)))
+# model.add(Dropout(0.25))
+# 
+# 
+# model.add(Conv2D(32,(3,3),activation='relu'))
+# model.add(MaxPooling2D(pool_size=(2,2)))
+# model.add(Dropout(0.25))
+# 
+# model.add(Flatten())
+# 
+# model.add(Dense(64,activation='relu'))
+# model.add(Dropout(0.50))
+# 
+# # adding  output  layer with 1 output  since it is binary classification
+# 
+# model.add(Dense(1,activation='sigmoid'))
+# 
+# #compling model with all layers
+# 
+# model.compile(optimizer='adam',loss='binary_crossentropy',metrics=['accuracy'])
+# 
+# 
+# 
+# 
+# 
+# 
 
+# In[ ]:
 
 
 
