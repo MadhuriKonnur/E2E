@@ -12,10 +12,10 @@
 
 import numpy as np 
 import matplotlib.pyplot as plt
-import keras
-from keras.layers import *
-from keras.models import Sequential
-from keras.preprocessing import image
+import tensorflow. keras
+from tensorflow.keras.layers import *
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.preprocessing import image
 from tensorflow.keras import backend
 #import os
 #import shutil
@@ -139,8 +139,8 @@ validation_generator.class_indices
 
 hist=model.fit_generator(
     train_generator,
-    steps_per_epoch=10,
-    epochs=10,
+    steps_per_epoch=8,
+    epochs=8,
     validation_data=validation_generator,
     validation_steps=8
 )
