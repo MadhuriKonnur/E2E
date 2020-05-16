@@ -166,7 +166,7 @@ ta=acc[1]
 
 
 with open('accuracy.txt', 'w') as myFile:
-    print( p, file=myFile)
+    print( ta, file=myFile)
 
 
 # In[ ]:
