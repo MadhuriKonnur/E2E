@@ -16,6 +16,8 @@ import keras
 from keras.layers import *
 from keras.models import Sequential
 from keras.preprocessing import image
+#import os
+#import shutil
 
 
 # In[ ]:
@@ -30,21 +32,18 @@ from keras.layers import LeakyReLU
 # Building CNN model using keras
 
 model=Sequential()
+
+# now adding convolution layers are  added
 model.add(Conv2D(filters=32,kernel_size=(3,3),activation='relu',input_shape=(224,224,3)))
 
 model.add(Conv2D(64,(3,3),activation='relu'))
 model.add(MaxPooling2D(pool_size=(2,2)))
 model.add(Dropout(0.25))
 
-model.add(Conv2D(64,(3,3),activation='relu'))
-model.add(MaxPooling2D(pool_size=(2,2)))
-model.add(Dropout(0.25))
-
-#model.add(Conv2D(128,(3,3),activation='relu'))
+#model.add(Conv2D(64,(3,3),activation='relu'))
 #model.add(MaxPooling2D(pool_size=(2,2)))
 #model.add(Dropout(0.25))
 
-# now 4 convolution layers are  added
 
 
 # now adding  flatten layer for 1D input NN
@@ -92,16 +91,6 @@ train_datagen= image.ImageDataGenerator(
 #just applying rescaling
 
 test_dataset=image.ImageDataGenerator(rescale=1./255)
-
-
-# In[ ]:
-
-
-#import os
-#import shutil
-# to remove extra class indices '.ipynb_checkpoints'
-#shutil.rmtree('output/train/.ipynb_checkpoints')
-#shutil.rmtree('output/val/.ipynb_checkpoints')
 
 
 # In[ ]:
@@ -158,13 +147,7 @@ hist=model.fit_generator(
 
 # loss is  decreasing 
 # 
-# ## Saving the model
-
-# In[ ]:
-
-
-model.save('cnn0.h5')
-
+# ## Evaluating model accuracy
 
 # In[ ]:
 
@@ -175,9 +158,14 @@ acc=model.evaluate_generator(train_generator)
 # In[ ]:
 
 
-print ("Train accuracy is :")
+ta=acc[1]
 
-acc[1]
+
+# In[ ]:
+
+
+with open('accuracy.txt', 'w') as myFile:
+    print( p, file=myFile)
 
 
 # In[ ]:
@@ -186,118 +174,22 @@ acc[1]
 model.evaluate_generator(validation_generator)
 
 
-# ## Testing  the images
-
-# In[ ]:
-
-
-# load and evaluate a saved model
-from keras.models import load_model
-
-
-model= load_model('cnn0.h5')
-
-
-# In[ ]:
-
-
-train_generator.class_indices
-
-
-# In[ ]:
-
-
-y_actual= []
-y_test = []
-
-
-# In[ ]:
-
-
-for i in os.listdir("./output/val/Normal/"):
-    img= image.load_img("./output/val/Normal/"+i,target_size=(224,224))
-    img= image.img_to_array(img)
-    img= np.expand_dims(img,axis=0)
-    p= model.predict_classes(img)
-    y_test.append(p[0,0])
-    y_actual.append(1)
-    
-
-
-# In[ ]:
-
-
-for i in os.listdir("./output/val/Covid/"):
-    img= image.load_img("./output/val/Covid/"+i,target_size=(224,224))
-    img= image.img_to_array(img)
-    img= np.expand_dims(img,axis=0)
-    p= model.predict_classes(img)
-    y_test.append(p[0,0])
-    y_actual.append(0)
-
-
-# In[ ]:
-
-
-y_actual=np.array(y_actual)
-y_test= np.array(y_test)
-
-
-# In[ ]:
-
-
-from sklearn.metrics import confusion_matrix
-
-cm= confusion_matrix(y_actual,y_test)
-
-
-# In[ ]:
-
-
-import seaborn as sns
-
-sns.heatmap(cm,cmap='plasma',annot=True)
-
-
-# train loss ,acc[0.2863135039806366, 0.9783549904823303] 
-# test loss ,acc  [0.13886258006095886, 0.982758641242981]
+# # Testing model 
+# #Once we got  desired  accuracy 
+# #test the  model.predict( test_image)
+# #for  chest x-ray
+# 
+# #<certain level preprocessing of  test_image  is required  before predicting>
 # 
 # 
+
+# # For further  use , we can directly  store  weights  by  saving  the  model
 # 
-# cm [[28, 1],
-#     [0,29]]
-# # Building CNN model using keras
-# 
-# model=Sequential()
-# model.add(Conv2D(filters=32,kernel_size=(3,3),activation='relu',input_shape=(224,224,3)))
-# 
-# model.add(Conv2D(64,(2,2),activation='relu'))
-# model.add(MaxPooling2D(pool_size=(2,2)))
-# model.add(Dropout(0.25))
+# #load and evaluate a saved model
+# #from keras.models import load_model
 # 
 # 
-# model.add(Conv2D(32,(3,3),activation='relu'))
-# model.add(MaxPooling2D(pool_size=(2,2)))
-# model.add(Dropout(0.25))
-# 
-# model.add(Flatten())
-# 
-# model.add(Dense(64,activation='relu'))
-# model.add(Dropout(0.50))
-# 
-# # adding  output  layer with 1 output  since it is binary classification
-# 
-# model.add(Dense(1,activation='sigmoid'))
-# 
-# #compling model with all layers
-# 
-# model.compile(optimizer='adam',loss='binary_crossentropy',metrics=['accuracy'])
-# 
-# 
-# 
-# 
-# 
-# 
+# #model= load_model('cnnmk.h5')
 
 # In[ ]:
 
