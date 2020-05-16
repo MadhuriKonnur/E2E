@@ -142,7 +142,7 @@ hist=model.fit_generator(
     steps_per_epoch=10,
     epochs=10,
     validation_data=validation_generator,
-    validation_steps=2
+    validation_steps=8
 )
 
 
