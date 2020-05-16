@@ -12,7 +12,7 @@
 
 import numpy as np 
 import matplotlib.pyplot as plt
-import tensorflow. keras
+import tensorflow.keras
 from tensorflow.keras.layers import *
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.preprocessing import image
