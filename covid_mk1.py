@@ -3,9 +3,9 @@
 
 # Building the CNN  model by using keras.....
 # 
-# 4-Convolution layers
+# n-Convolution layers
 # 
-# 2-Dense for nn-hidden and output
+# m-Dense for nn-hidden and output
 
 # In[ ]:
 
@@ -188,7 +188,7 @@ model.evaluate(validation_generator)
 # #from keras.models import load_model
 # 
 # 
-# #model= load_model('cnnmk.h5')
+# #model= load_model('mk_cnn.h5')
 
 # In[ ]:
 
