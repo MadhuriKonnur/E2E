@@ -24,10 +24,7 @@ from tensorflow.keras import backend
 # In[ ]:
 
 
-from keras.layers import LeakyReLU
 
-
-# In[ ]:
 
 
 # Building CNN model using keras
@@ -152,9 +149,11 @@ hist=model.fit_generator(
 # ## Evaluating model accuracy
 
 # In[ ]:
+#Saving  model
+model.save('mk_cnn.h5')
 
 
-acc=model.evaluate_generator(train_generator)
+acc=model.evaluate(train_generator)
 
 
 # In[ ]:
@@ -173,7 +172,7 @@ with open('accuracy.txt', 'w') as myFile:
 # In[ ]:
 
 
-model.evaluate_generator(validation_generator)
+model.evaluate(validation_generator)
 
 
 # # Testing model 
