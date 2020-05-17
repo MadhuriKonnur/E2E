@@ -47,8 +47,9 @@ model.add(Dropout(0.25))
 
 
 
-# now adding  flatten layer for 1D input NN
+
 model.add(Flatten())
+# now added  flatten layer for 1D input NN
 
 #model.summary()
 
