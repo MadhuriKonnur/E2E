@@ -37,14 +37,12 @@ model.add(Conv2D(filters=32,kernel_size=(3,3),activation='relu',input_shape=(224
 model.add(Conv2D(64,(3,3),activation='relu'))
 model.add(MaxPooling2D(pool_size=(2,2)))
 model.add(Dropout(0.25))
+# Adding convolution layer below via jenkin job automation
 
-#model.add(Conv2D(64,(3,3),activation='relu'))
-#model.add(MaxPooling2D(pool_size=(2,2)))
-#model.add(Dropout(0.25))
 
-model.add(Conv2D(64,(3,3),activation='relu' )) 
-model.add(MaxPooling2D(pool_size=(2,2))) 
-model.add(Dropout(0.25)) 
+
+
+
 model.add(Flatten())
 # now added  flatten layer for 1D input NN
 
